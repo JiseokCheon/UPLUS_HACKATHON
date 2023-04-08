@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+
+#jasypt
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    password: tk # JASYPT_ENCRYPTOR_PASSWORD
+
+spring:
+  profiles:
+    active: dev
+  redis:
+    host: 13.209.83.126
+    port: 3000
+  messages:
+    basename: errors
+
+

@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<head th:replace="fragments/header :: header" />
+<body>
+
+<!-- **************** MAIN CONTENT START **************** -->
+
+<!-- =======================
+Header START -->
+<header class="navbar-light fixed-top header-static bg-mode">
+
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Logo START -->
+            <a class="navbar-brand" href="/">
+                <img class="light-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo">
+                <img class="dark-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo">
+            </a>
+            <!-- Logo END -->
+
+            <!-- 모바일화면 navbar toggler -->
+            <button class="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-animation">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+
+            <!-- Main navbar START -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                <ul class="navbar-nav navbar-nav-scroll ms-auto">
+                    <!-- Nav 서비스 소개 Mega menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">서비스소개</a>
+                        <ul class="dropdown-menu" aria-labelledby="postMenu">
+                            <li><a class="dropdown-item active" th:href="@{'/'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/home-outline-filled.svg" alt="">홈</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{'/positionTest'}">
+                                <img class="me-2 h-20px fa-fw"
+                                     src="/assets/images/icon/binocular-var-outline-filled.svg" alt="">서비스소개</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/searchPosition'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bulb-money-outline-filled.svg"
+                                     alt="">공지사항</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/addressSearch'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bulb-money-outline-filled.svg"
+                                     alt="">서비스 문의하기</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Nav item 1 Demos -->
+                    <div th:replace="fragments/navyMenu :: navItem1"></div>
+                    <!-- Nav item 2 Pages -->
+                    <div th:replace="fragments/navyMenu :: navItem2"></div>
+                </ul>
+            </div>
+            <!-- Main navbar END -->
+
+
+            <!-- Nav right START -->
+            <div th:replace="fragments/navyMenu :: navRight"></div>
+            <!-- Nav right END -->
+        </div>
+    </nav>
+    <!-- Logo Nav END -->
+</header>
+<!-- =======================
+Header END -->
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+    <!-- Container START -->
+    <div class="container">
+        <div class="row g-4">
+            <!-- Main content START -->
+            <div class="col-lg-12">
+                <div class="bg-mode p-4">
+                    <div class="row">
+                        <div class="col-md-3 card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
+                            <h1 class="card-title h4 h4 mb-4">요청한 배달 리스트</h1></div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+                    <!-- User Rank item START -->
+                    <div class="card bg-transparent border-0">
+                        <div th:replace="fragments/listHeader :: listHeader" />
+                    </div><!-- Rank Header End -->
+                    <br>
+                        <th:block th:each="deliver : ${deliverList}">
+                            <th:block th:switch="${deliver.deliveryStatus.status == '완료'}">
+
+                            <!-- 상태가 완료가 아닌 경우-->
+                            <div class="row g-3" th:case="false">
+                                <a th:href="@{/DeliveryRequest/{id}(id=${deliver.id})}">
+                                    <div class="col-sm-10 col-6">
+                                        <div class="row g-2">
+                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.start})"></div>
+                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.end})"></div>
+<!--                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.deliverUser})"></div>-->
+                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${#numbers.formatInteger(deliver.price, 0, 'COMMA')})"></div>
+                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.product})"></div>
+                                            <div th:replace="fragments/listBody.html :: bodyLastElement(data=${deliver.deliveryStatus.status})"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="col-sm-2 col-6">
+                                    <div class="row g-2">
+                                        <div th:replace="fragments/listBody.html :: disabledButtonElement(deliver=${deliver})"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 상태가 완료인 경우-->
+                            <div class="row g-3" th:case="true">
+                                <a th:href="@{/delivery/{id}(id=${deliver.id})}">
+                                    <div class="col-sm-10 col-6">
+                                        <div class="row g-2">
+                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.start})"></div>
+                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.end})"></div>
+<!--                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.deliverUser.email})"></div>-->
+                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${#numbers.formatInteger(deliver.price, 0, 'COMMA')})"></div>
+                                            <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.product})"></div>
+                                            <div th:replace="fragments/listBody.html :: bodyLastElement(data=${deliver.deliveryStatus.status})"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="col-sm-2 col-6">
+                                    <div class="row g-2">
+                                        <div th:replace="fragments/listBody.html :: buttonElement(deliver=${deliver})"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                            </th:block>
+                        </th:block>
+                    </div> <!-- User Rank END -->
+
+
+                </div>
+            </div>
+        </div>
+        <!-- Main content END -->
+    </div>
+    <!-- Container END -->
+
+</main>
+<div th:replace="fragments/footer :: footer" />
+
+
+</body>
+</html>
+
+<script>
+    function grading(deliverId, userId) {
+        window.location.href = `${window.location.origin}/grade/${deliverId}/${userId}`;
+        console.log('grading');
+    }
+</script>
+  

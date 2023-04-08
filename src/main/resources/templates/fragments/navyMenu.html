@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<ul th:fragment="navRight" class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
+    <!-- Notification dropdown END -->
+    <li class="nav-item ms-2 dropdown">
+        <th:block th:if="${session.login_user == null}">
+            <a class="nav-link btn icon-md p-0" th:href="@{/login/signIn}">
+                <button type="submit" class="btn btn-sm btn-primary-soft"><i class="fa-solid bi-person text-info fs-4"></i></button>
+                <!--                            <img class="avatar-img rounded-2" src="/assets/images/google_oauth2.png" alt="">-->
+            </a>
+        </th:block>
+        <th:block th:if="${session.login_user != null}">
+            <a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="avatar-img rounded-2" th:src="${session.login_user.picture}" alt="">
+            </a>
+
+            <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3" aria-labelledby="profileDropdown">
+                <!-- Profile info -->
+                <li class="px-3">
+                    <div class="d-flex align-items-center position-relative">
+                        <!-- Avatar -->
+                        <div class="avatar me-3">
+                            <img class="avatar-img rounded-circle" th:src="${session.login_user.picture}" alt="avatar">
+                        </div>
+                        <div>
+                            <a class="h6 stretched-link" href="#"><span th:text="${session.login_user.email}"></span></a>
+                            <p class="small m-0" th:text="${session.login_user.name}">name</p>
+                        </div>
+                    </div>
+                    <!--                            <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" th:href="@{/user/id/{id} (id=${login_session.id})}">My profile</a>-->
+                </li>
+                <!-- Links -->
+
+                <li><a class="dropdown-item" th:href="@{'/order/request-deliver'}">
+                    <i class="bi bi-house-heart-fill fa-fw me-2 text-danger"></i>나의 배달요청</a></li>
+                <li>
+                    <a class="dropdown-item" th:href="@{'/order/perform-deliver'}">
+                        <i class="fa-fw bi bi-info-square-fill me-2 text-primary"></i>배달 수행현황
+                    </a>
+                </li>
+                <li class="dropdown-divider"></li>
+                <li><a class="dropdown-item bg-danger-soft-hover" th:href="@{/logout}"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+                <li> <hr class="dropdown-divider"></li>
+                <!-- Dark mode switch START -->
+                <li>
+                    <div class="modeswitch-wrap" id="darkModeSwitch">
+                        <div class="modeswitch-item">
+                            <div class="modeswitch-icon"></div>
+                        </div>
+                        <span>Dark mode</span>
+                    </div>
+                </li>
+                <!-- Dark mode switch END -->
+            </ul>
+        </th:block>
+    </li>
+</ul>
+
+<li th:fragment="navItem1" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="homeMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">배달</a>
+    <ul class="dropdown-menu" aria-labelledby="homeMenu">
+        <li> <a class="dropdown-item" th:href="@{'/order/request_delivery'}">
+            <img class="me-2 h-20px fa-fw" src="/assets/images/icon/inbox-outline-filled.svg" alt="">배달요청하기</a></li>
+    </ul>
+</li>
+
+
+<li th:fragment="navItem2" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">마이페이지</a>
+    <ul class="dropdown-menu" aria-labelledby="pagesMenu">
+        <li> <a class="dropdown-item" th:href="@{'/order/request-deliver'}">
+            <img class="me-2 h-20px fa-fw" src="/assets/images/icon/handshake-outline-filled.svg" alt="">나의 배달요청</a></li>
+        <li> <a class="dropdown-item" th:href="@{'/order/perform-deliver'}">
+            <img class="me-2 h-20px fa-fw" src="/assets/images/icon/car-outline-filled.svg" alt="">배달 수행현황</a></li>
+    </ul>
+</li>
+
+<li th:fragment="navItem3" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="memberRankMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원 서비스</a>
+    <ul class="dropdown-menu" aria-labelledby="memberRankMenu">
+        <li> <a class="dropdown-item" th:href="@{'/member/user'}">메뉴7</a></li>
+        <li> <a class="dropdown-item" th:href="@{'/member/searchRank'}">메뉴8</a></li>
+        <li class="dropdown-divider"></li>
+        <li>
+            <a class="dropdown-item" th:href="@{'/login/comingSoon'}" target="_blank">
+                <i class="text-success fa-fw bi bi-cloud-download-fill me-2"></i>메뉴9
+            </a>
+        </li>
+    </ul>
+</li>

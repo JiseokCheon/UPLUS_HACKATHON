@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="bodyElement (data)" class="col-sm">
+  <div class="d-flex justify-content-center">
+    <div class="ms-3">
+      <h6 class="mb-0 mx-1" th:text="${data}">login</h6>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="bodyLastElement (data)" class="col-sm">
+  <div class="d-flex justify-content-center">
+    <div class="badge bg-info bg-opacity-10 text-info mb-2 fw-bold">
+      <h6 class="mb-0 mx-1 fw-bold" th:text="${data}">login</h6>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="buttonElement (deliver)" class="col-sm">
+  <div class="d-flex justify-content-center">
+    <div class="badge bg-info bg-opacity-10 text-info mb-2 fw-bold">
+      <button type="button" th:deliverId="${deliver.id}" th:userId="${deliver.deliverUser.id}"
+              th:onclick="grading(this.getAttribute('deliverId'), this.getAttribute('userId'))">평점 매기기</button>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="disabledButtonElement (deliver)" class="col-sm">
+  <div class="d-flex justify-content-center">
+    <div class="badge bg-info bg-opacity-10 text-info mb-2 fw-bold">
+      <button type="button" th:onclick="|location.href='@{/grade/${deliver.id}/${deliver.deliverUser.id}}'|" disabled>평점 매기기</button>
+    </div>
+  </div>
+</div>
+
+</html>
+<!--<div th:fragment="listBody" class="row g-3">-->
+<!--  <div class="col-sm-2 col-6 d-flex justify-content-center align-content-center">-->
+<!--    <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.requestUser.name})"></div>-->
+<!--  </div>-->
+<!--  -->
+<!--  <div class="col-sm-10 col-6">-->
+<!--    <div class="row g-2">-->
+<!--      <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.start})"></div>-->
+<!--      <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.requestUserPhone})"></div>-->
+<!--      <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.end})"></div>-->
+<!--      <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.recipientUserPhone})"></div>-->
+<!--      <div th:replace="fragments/listBody.html :: bodyElement(data=${#numbers.formatInteger(deliver.price, 0, 'COMMA')})"></div>-->
+<!--      <div th:replace="fragments/listBody.html :: bodyElement(data=${deliver.product})"></div>-->
+<!--      <div th:replace="fragments/listBody.html :: bodyLastElement(data=${deliver.deliveryStatus.status})"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  -->
+<!--</div>-->

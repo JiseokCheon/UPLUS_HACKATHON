@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/header :: header"/>
+<body>
+
+<!-- =======================
+Header START -->
+<header class="navbar-light fixed-top header-static bg-mode">
+
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Logo START -->
+            <a class="navbar-brand" href="/">
+                <img class="light-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo">
+                <img class="dark-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo">
+            </a>
+            <!-- Logo END -->
+
+            <!-- 모바일화면 navbar toggler -->
+            <button class="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+              <span class="navbar-toggler-animation">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+
+            <!-- Main navbar START -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                <ul class="navbar-nav navbar-nav-scroll ms-auto">
+                    <!-- Nav 서비스 소개 Mega menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">서비스소개</a>
+                        <ul class="dropdown-menu" aria-labelledby="postMenu">
+                            <li><a class="dropdown-item active" th:href="@{'/'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/home-outline-filled.svg" alt="">홈</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{'/positionTest'}">
+                                <img class="me-2 h-20px fa-fw"
+                                     src="/assets/images/icon/binocular-var-outline-filled.svg" alt="">서비스소개</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/searchPosition'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bulb-money-outline-filled.svg"
+                                     alt="">공지사항</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/addressSearch'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bulb-money-outline-filled.svg"
+                                     alt="">서비스 문의하기</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Nav item 1 Demos -->
+                    <div th:replace="fragments/navyMenu :: navItem1"></div>
+                    <!-- Nav item 2 Demos -->
+                    <div th:replace="fragments/navyMenu :: navItem2"></div>
+                </ul>
+            </div>
+            <!-- Main navbar END -->
+
+            <!-- Nav right START -->
+            <div th:replace="fragments/navyMenu :: navRight"></div>
+            <!-- Nav right END -->
+        </div>
+    </nav>
+    <!-- Logo Nav END -->
+</header>
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+    <!-- Container START -->
+    <div class="container">
+        <div class="row g-4">
+            <!-- Main content START -->
+            <div class="col-lg-8">
+                <div class="bg-mode p-4">
+                    <form class="row" name="searchForm" action="/" th:action th:object="${searchForm}" method="get">
+                        <h1 class="h4 col-sm-4 mb-4">배달 목록</h1>
+                        <div class="col-sm-3 mt-1">
+                            <label class="form-label">출발지</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" th:field="*{start}" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 mt-1">
+                            <label class="form-label">도착지</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" th:field="*{end}" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-2 text-center mt-3 pt-3">
+                            <button class="btn btn-outline-primary" type="submit">검색</button>
+                        </div>
+                    </form>
+                    <hr class="my-4">
+
+                    <div th:each="deliver : ${deliverList}">
+                        <!-- Blog item START -->
+                        <div class="card bg-transparent border-0">
+                            <div class="row g-3">
+                                <div class="col-2">
+                                    <!-- Blog image -->
+                                    <img class="rounded" th:src="${deliver.requestUserPhoto}" alt="">
+                                </div>
+                                <div class="col-10">
+                                    <div class="row">
+                                        <!-- Blog caption -->
+                                        <div class="col-6">
+                                            <div th:switch="${deliver.deliveryStatus.status}">
+                                                <a href="#" th:case="'요청 완료'"
+                                                   class="badge bg-info bg-opacity-10 text-info mb-2 fw-bold">요청 완료</a>
+                                                <a href="#" th:case="'입찰 중'"
+                                                   class="badge bg-warning bg-opacity-10 text-warning mb-2 fw-bold">입찰
+                                                    중</a>
+                                            </div>
+                                            <h5><a href="blog-details.html"
+                                                   th:href="@{/delivery/{id} (id=${deliver.id})}"
+                                                   class="btn-link stretched-link text-reset fw-bold"
+                                                   th:text="${deliver.product}"></a>
+                                            </h5>
+                                            <h6><a class="small text-secondary" href="#!"
+                                                   th:text="${deliver.content}"></a>
+                                            </h6>
+                                        </div>
+                                        <div class="col-6">
+                                            <h6 class="d-none d-sm-inline-block">
+                                                <p class="mb-2" th:text="|${deliver.price} 원|"></p>
+                                            </h6>
+                                            <h6 c><a class="small text-secondary" href="#!"
+                                                     th:text="|요청자 : ${deliver.requestUserName}|"></a>
+                                            </h6>
+                                            <h6><a class="small text-secondary" href="#!"
+                                                   th:text="|${deliver.distance} km /  ${deliver.weight.description}|"></a>
+                                            </h6>
+                                            <a class="small text-secondary"
+                                               href="#!"
+                                               th:text="|마감기한 : ${#temporals.format(deliver.dueDate, 'yyyy-MM-dd HH:mm')}|">
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <!-- Blog item END -->
+                    </div>
+                    <!-- Pagination -->
+                    <div class="mt-4">
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination pagination-light d-inline-block d-md-flex justify-content-center">
+                                <li class="page-item"
+                                    th:classappend="${startPage == deliverList.pageable.pageNumber + 1} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/(page=${deliverList.pageable.pageNumber - 1})}"
+                                       tabindex="-1">이전</a>
+                                </li>
+                                <li class="page-item"
+                                    th:classappend="${num == deliverList.pageable.pageNumber + 1} ? 'active'"
+                                    th:each="num : ${#numbers.sequence(startPage, endPage)}">
+                                    <a class="page-link" th:href="@{/(page=${num-1})}" th:text="${num}">1</a></li>
+                                <li class="page-item"
+                                    th:classappend="${endPage == deliverList.pageable.pageNumber + 1} ? 'disabled'">
+                                    <a class="page-link" th:href="@{/(page=${deliverList.pageable.pageNumber + 1})}">다음</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Main content END -->
+
+            <!-- Right sidebar START -->
+            <div class="col-lg-4">
+                <div class="row g-4">
+                    <!-- Card News START -->
+                    <div class="col-sm-6 col-lg-12">
+                        <div class="card">
+                            <!-- Card header START -->
+                            <div class="card-header pb-0 border-0">
+                                <h5 class="card-title mb-0">최근 배달가격</h5>
+                            </div>
+                            <!-- Card header END -->
+                            <!-- Card body START -->
+                            <div class="card-body" >
+                                <!-- News item -->
+                                <div class="row mb-3" th:each="deliver : ${top5DeliveryCompleteList}">
+                                    <hr>
+                                    <h6 class="col-3 mb-0" th:text="|${deliver.price} 원|">20000원</h6>
+                                    <small class="col-6" th:text="|${deliver.distance} km / ${deliver.weight.description}|">2.3km / 2kg 이하</small>
+                                </div>
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                    </div>
+                    <!-- Card News END -->
+
+                    <!-- Card News START -->
+                    <div class="col-sm-6 col-lg-12">
+                        <div class="card">
+                            <!-- Card header START -->
+                            <div class="card-header pb-0 border-0">
+                                <h5 class="card-title mb-0">Tags</h5>
+                            </div>
+                            <!-- Card header END -->
+                            <!-- Card body START -->
+                            <div class="card-body">
+                                <!-- Tag list START -->
+                                <ul class="list-inline mb-0 d-flex flex-wrap gap-2">
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">blog</a>
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">business</a>
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">theme</a>
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">social</a>
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">getbootstrap</a>
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">design</a>
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">news</a>
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">magazine</a>
+                                    </li>
+                                    <li class="list-inline-item m-0">
+                                        <a class="btn btn-outline-light btn-sm" href="#">events</a>
+                                    </li>
+                                </ul>
+                                <!-- Tag list END -->
+                                <!-- Card body END -->
+                            </div>
+                        </div>
+                        <!-- Card News END -->
+                    </div>
+
+                </div>
+                <!-- Right sidebar END -->
+            </div> <!-- Row END -->
+        </div>
+    </div>
+    <!-- Container END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+<!-- footer START -->
+<footer class="bg-mode py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Footer nav START -->
+                <ul class="nav justify-content-center justify-content-md-start lh-1">
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-profile-about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="https://support.webestica.com/login">Support </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="docs/index.html">Docs </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="privacy-and-terms.html">Privacy & terms</a>
+                    </li>
+                </ul>
+                <!-- Footer nav START -->
+            </div>
+            <div class="col-md-6">
+                <!-- Copyright START -->
+                <p class="text-center text-md-end mb-0">©2022 <a class="text-body" target="_blank"
+                                                                 href="https://www.webestica.com"> Webestica </a>All
+                    rights reserved.</p>
+                <!-- Copyright END -->
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer END -->
+
+<!-- =======================
+JS libraries, plugins and custom scripts -->
+
+<!-- Bootstrap JS -->
+<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Template Functions -->
+<script src="assets/js/functions.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<head th:replace="fragments/header :: header" />
+<body>
+
+<!-- **************** MAIN CONTENT START **************** -->
+
+<!-- =======================
+Header START -->
+<header class="navbar-light fixed-top header-static bg-mode">
+
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Logo START -->
+            <a class="navbar-brand" href="/">
+                <img class="light-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo">
+                <img class="dark-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo">
+            </a>
+            <!-- Logo END -->
+
+            <!-- 모바일화면 navbar toggler -->
+            <button class="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-animation">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+
+            <!-- Main navbar START -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                    <ul class="navbar-nav navbar-nav-scroll ms-auto">
+                        <!-- Nav 서비스 소개 Mega menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">서비스소개</a>
+                            <ul class="dropdown-menu" aria-labelledby="postMenu">
+                                <li> <a class="dropdown-item active" th:href="@{'/'}">
+                                    <img class="me-2 h-20px fa-fw" src="/assets/images/icon/home-outline-filled.svg" alt="">홈</a> </li>
+                                <li> <a class="dropdown-item" th:href="@{'/positionTest'}">
+                                    <img class="me-2 h-20px fa-fw" src="/assets/images/icon/binocular-var-outline-filled.svg" alt="">서비스소개</a> </li>
+                                <li> <a class="dropdown-item" th:href="@{'/searchPosition'}">
+                                    <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bulb-money-outline-filled.svg" alt="">공지사항</a> </li>
+                                <li> <a class="dropdown-item" th:href="@{'/addressSearch'}">
+                                    <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bulb-money-outline-filled.svg" alt="">서비스 문의하기</a> </li>
+                            </ul>
+                        </li>
+
+                        <!-- Nav item 1 Demos -->
+                        <div th:replace="fragments/navyMenu :: navItem1"></div>
+                        <!-- Nav item 2 Demos -->
+                        <div th:replace="fragments/navyMenu :: navItem2"></div>
+                </ul>
+            </div>
+            <!-- Main navbar END -->
+
+            <!-- Nav right START -->
+            <div th:replace="fragments/navyMenu :: navRight"></div>
+            <!-- Nav right END -->
+        </div>
+    </nav>
+    <!-- Logo Nav END -->
+</header>
+<!-- =======================
+Header END -->
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+
+<div class="container" style="margin-top:30px">
+    <div class="row">
+        <div class="col-md-2">
+
+        </div>
+
+        <div class="col-md-9">
+            <!-- Create a page START -->
+            <div class="card">
+                <!-- Title START -->
+                <div class="card-header border-0 pb-0">
+                    <h1 class="h4 card-title mb-0">주문접수</h1>
+                </div>
+                <!-- Title END -->
+                <!-- form START -->
+                <div class="card-body">
+                    <form class="row g-3" name="myform"  action="/order/request_delivery" th:action th:object="${orderInfo}" method="get">
+
+                        <div class="col-12">
+                            <h5 class="card-title mb-0">출발지</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label">주문자</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-person-fill text-danger"></i> </span>
+                                <input type="text" class="form-control" id="loginName" name="loginName" th:value="${session.login_user.name}" placeholder="" readonly>
+                                <input type="text" class="form-control" id="loginEmail" name="loginEmail" th:value="${session.login_user.email}" hidden>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label">출발지 주소</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-map-fill text-danger"></i> </span>
+                                <input type="text" class="form-control" th:field="*{start}" th:errorclass="field-error" placeholder="">
+                                <input type="hidden" class="form-control"th:field="*{startLat}">
+                                <input type="hidden" class="form-control"th:field="*{startLon}">
+                                <button class="btn btn-outline-primary" onclick="getAddressFromMap('start')">
+                                    지도에서 지정
+                                </button>
+                            </div>
+                            <div class="invalid-feedback" th:errors="${deliveryForm.start}">오류메시지</div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label">요청자 핸드폰</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-telephone-fill text-danger"></i> </span>
+                                <input type="text" class="form-control" th:field="*{requestUserPhone}" placeholder="">
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr>
+
+                        <!-- 도착지 START -->
+                        <div class="col-12">
+                            <h5 class="card-title mb-0">도착지</h5>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="form-label">도착지 주소</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-map-fill text-success"></i> </span>
+                                <input type="text" class="form-control" th:field="*{end}" placeholder="">
+                                <input type="hidden" class="form-control" th:field="*{endLat}">
+                                <input type="hidden" class="form-control" th:field="*{endLon}">
+                                <button class="btn btn-outline-primary" onclick="getAddressFromMap('end')">
+                                    지도에서 지정
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-12">
+                            <label class="form-label">수신자 핸드폰</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-telephone-fill text-success"></i> </span>
+                                <input type="text" class="form-control" th:field="*{recipientUserPhone}" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label class="form-label">배달상세</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-chat-text-fill text-success"></i> </span>
+                                <input type="text" class="form-control" th:field="*{content}" placeholder="">
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr>
+                        <div class="col-12">
+                            <h5 class="card-title mb-0">배달상품</h5>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="form-label">물품 설명</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-box-seam text-primary"></i> </span>
+                                <input type="text" class="form-control" th:field="*{product}" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label">마감 기한</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-calendar-event-fill text-primary"></i> </span>
+                                <input type="datetime-local" class="form-control" th:field ="*{dueDate}" >
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6">
+                            <label class="form-label">희망가격</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-currency-exchange text-primary"></i> </span>
+                                <input type="text" class="form-control" th:field="*{price}" th:errorclass="field-error"  placeholder="">
+                            </div>
+                            <div class="invalid-feedback" th:errors="${deliveryForm.price}">오류메시지</div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="form-label">배송거리</label>
+                            <div class="input-group">
+                                <span class="input-group-text border-0"> <i class="bi bi-fullscreen text-primary"></i> </span>
+                                <input type="text" class="form-control" th:field="*{distance}" th:errorclass="field-error"  placeholder="">
+                            </div>
+                            <div class="invalid-feedback" th:errors="${deliveryForm.distance}">오류메시지</div>
+                        </div>
+
+
+
+                        <!-- radio button -->
+                        <div class="col-sm-12">
+                            <div>상품 무게</div>
+                            <div th:each="type : ${maxWeights}" class="form-check form-check-inline">
+                                <input type="radio" th:field="*{weight}" th:value="${type.name()}" th:errorclass="field-error"  class="form-check-input">
+                                <label th:for="${#ids.prev('weight')}" th:text="${type.description}" class="form-check-label">
+                                    2KG 이하
+                                </label>
+                            </div>
+                            <div class="invalid-feedback" th:errors="${deliveryForm.weight}">오류메시지</div>
+                        </div>
+
+                        <!-- Button  -->
+                        <div class="col-12 text-center">
+                            <button class="btn btn-outline-primary" onclick="onSubmit()">저장</button>
+                        </div>
+
+                    </form>
+                </div>
+                <!-- Create a page form END -->
+            </div>
+        </div> <!-- /container -->
+    </div>
+</div> <!-- /container -->
+</main>
+<script>
+
+    function getAddressFromMap(elementId, locationElementId) {
+        const address = document.getElementById(elementId).value;
+
+        window.name = "parentForm";     // 부모창 이름;
+        openWin = window.open("delivery_map?address="+address,
+            "childForm", "width=770, height=750, resizable = no, scrollbars = no");
+        openWin.elementId = elementId;
+        openWin.locationElementId = locationElementId;
+    }
+
+
+    function onSubmit(){
+        document.myform.action = "/order/request_delivery";
+        document.myform.method = "post";
+        document.myform.submit();
+    }
+
+</script>
+<div th:replace="fragments/footer :: footer" />
+
+
+</body>
+</html>

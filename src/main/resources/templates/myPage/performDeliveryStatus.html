@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<head th:replace="fragments/header :: header" />
+<body>
+
+<!-- **************** MAIN CONTENT START **************** -->
+
+<!-- =======================
+Header START -->
+<header class="navbar-light fixed-top header-static bg-mode">
+
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Logo START -->
+            <a class="navbar-brand" href="/">
+                <img class="light-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo">
+                <img class="dark-mode-item navbar-brand-item" src="/assets/images/logo.svg" alt="logo">
+            </a>
+            <!-- Logo END -->
+
+            <!-- 모바일화면 navbar toggler -->
+            <button class="navbar-toggler ms-auto icon-md btn btn-light p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-animation">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+
+            <!-- Main navbar START -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                <ul class="navbar-nav navbar-nav-scroll ms-auto">
+                    <!-- Nav 서비스 소개 Mega menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" href="#" id="postMenu" data-bs-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">서비스소개</a>
+                        <ul class="dropdown-menu" aria-labelledby="postMenu">
+                            <li><a class="dropdown-item active" th:href="@{'/'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/home-outline-filled.svg" alt="">홈</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{'/positionTest'}">
+                                <img class="me-2 h-20px fa-fw"
+                                     src="/assets/images/icon/binocular-var-outline-filled.svg" alt="">서비스소개</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/searchPosition'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bulb-money-outline-filled.svg"
+                                     alt="">공지사항</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/addressSearch'}">
+                                <img class="me-2 h-20px fa-fw" src="/assets/images/icon/bulb-money-outline-filled.svg"
+                                     alt="">서비스 문의하기</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Nav item 1 Demos -->
+                    <div th:replace="fragments/navyMenu :: navItem1"></div>
+                    <!-- Nav item 2 Pages -->
+                    <div th:replace="fragments/navyMenu :: navItem2"></div>
+                </ul>
+            </div>
+            <!-- Main navbar END -->
+
+
+            <!-- Nav right START -->
+            <div th:replace="fragments/navyMenu :: navRight"></div>
+            <!-- Nav right END -->
+        </div>
+    </nav>
+    <!-- Logo Nav END -->
+</header>
+<!-- =======================
+Header END -->
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+    <!-- Container START -->
+    <div class="container">
+        <div class="row g-4">
+            <!-- Main content START -->
+            <div class="col-lg-12">
+                <div class="bg-mode p-4">
+                    <div class="row">
+                        <div class="col-md-3 card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
+                            <h1 class="card-title h4 h4 mb-4">수행한 배달 리스트</h1></div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+                    <!-- User Rank item START -->
+                    <div class="card bg-transparent border-0">
+                        <div class="row g-4 ">
+                            <div class="col-sm-2 col-6 d-flex justify-content-center align-content-center">
+                                <i class="bi bi-person-bounding-box text-success fs-4"></i>
+                                <div class="ms-3 ">
+                                    <h6 class="mb-0">신청인</h6>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-10 col-6">
+                                <div class="row g-2">
+
+                                    <div class="col-sm-3">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="bi bi-truck text-warning fs-4"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">보내는곳</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="bi bi-people-fill text-info fs-4"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">보내는사람</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="fa-solid bi-map-fill text-success fs-4"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">받는 곳</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="fa-solid bi-people-fill text-danger fs-4"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">받는 사람</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="fa-solid bi-currency-dollar text-primary fs-4"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">배달비</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="fa-solid bi-currency-exchange text-danger fs-4"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">희망가</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="fa-solid bi-box text-black"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">물품</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="fa-solid bi-minecart text-warning fs-4"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">배달 요청 상태</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="d-flex justify-content-center">
+                                            <i class="fa-solid bi-mailbox text-primary fs-4"></i>
+                                            <div class="ms-3">
+                                                <h6 class="mb-0">배달 완료</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div><!-- Rank Header End -->
+                        <br>
+                        <div class="row g-3">
+                            <th:block th:each="deliver : ${deliverList}">
+                                <div class="col-sm-2 col-6 d-flex justify-content-center align-content-center">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="ms-3">
+                                            <h6 class="mb-0 mx-1" th:text="${deliver.requestUserName}">login</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-10 col-6">
+                                    <div class="row g-2">
+
+                                        <div class="col-sm-3">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 mx-1" th:text="${deliver.start}">login</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 mx-1" th:text="${deliver.requestUserPhone}">login</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 mx-1" th:text="${deliver.end}">login</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 mx-1" th:text="${deliver.recipientUserPhone}">login</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="ms-3">
+                                                    <h7 class="mb-0" th:text="${#numbers.formatInteger(deliver.originPrice, 0, 'COMMA')}">1</h7>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="ms-3">
+                                                    <h7 class="mb-0" th:text="${#numbers.formatInteger(deliver.bidPrice, 0, 'COMMA')}">1</h7>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 mx-1" th:text="${deliver.product}">login</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0 mx-1" th:text="${deliver.deliverRequestStatus}">login</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <th:block th:switch="${deliver.deliverStatus == '진행중'}">
+                                            <div th:case="true" class="col-sm-3">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="badge bg-info bg-opacity-10 text-info mb-2 fw-bold">
+                                                        <button type="button" th:deliverId="${deliver.deliverId}"
+                                                                th:onclick="completeDeliver(this.getAttribute('deliverId'))">완료</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div th:case="false" class="col-sm-3">
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="badge bg-info bg-opacity-10 text-info mb-2 fw-bold">
+                                                        <button type="button" disabled>완료</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th:block>
+
+                                    </div>
+                                </div>
+                                <hr>
+                            </th:block>
+                        </div>
+                    </div> <!-- User Rank END -->
+
+
+                </div>
+            </div>
+        </div>
+        <!-- Main content END -->
+    </div>
+    <!-- Container END -->
+
+</main>
+<div th:replace="fragments/footer :: footer" />
+
+
+</body>
+</html>
+
+<script>
+    function completeDeliver(deliveryId) {
+        const host = window.location.origin;
+        fetch(`${host}/order/delivery/${deliveryId}`, {
+            method: 'GET'
+        });
+    }
+
+</script>
